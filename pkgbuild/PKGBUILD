@@ -5,6 +5,7 @@ pkgname=sysctl-network
 pkgver=$(date +%y.%m.%d)
 pkgrel=$(date +%H%M)
 pkgdesc="Sysctl file to improve network configuration and other tweaks to network"
+depends=('nss-mdns')
 arch=('any')
 url="https://github.com/biglinux/$pkgname"
 source=("git+https://github.com/biglinux/$pkgname.git")
