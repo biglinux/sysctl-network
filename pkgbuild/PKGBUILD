@@ -9,7 +9,7 @@ arch=('any')
 url="https://github.com/biglinux/$pkgname"
 license=('GPL3')
 provides=("$pkgname")
-md5sums=('SKIP')
+md5sums=(SKIP)
 if [ -e "${pkgname}.install" ];then
     install=${pkgname}.install
 fi
