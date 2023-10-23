@@ -1,7 +1,7 @@
 post_install() {
 
     # Temporary fix to disable dnsmasq usage in network manager, remove this in few days
-    if [[ ! -e /etc/NetworkManager/conf.d/dns.conf ]]; then
+    if [[ -e /etc/NetworkManager/conf.d/dns.conf ]]; then
         rm -f /etc/NetworkManager/conf.d/dns.conf
     fi
 
