@@ -1,20 +1,14 @@
 post_install() {
 
-    # enable dnsmasq in NetworkManager, dont need start dnsmasq directly, NetworkManager do this
-    if [[ "$(systemctl is-enabled systemd-resolved.service)" = "disabled" ]] && [[ -e /usr/bin/dnsmasq ]] && [[ ! -e /etc/NetworkManager/conf.d/dns.conf ]]; then
-        echo '[main]
-dns=dnsmasq' > /etc/NetworkManager/conf.d/dns.conf
+    # Temporary fix to disable dnsmasq usage in network manager, remove this in few days
+    if [[ ! -e /etc/NetworkManager/conf.d/dns.conf ]]; then
+        rm -f /etc/NetworkManager/conf.d/dns.conf
+    fi
 
-        # disable old nmb, only needed to found very old shares from windows 7 and more older
-        if [[ "$(systemctl is-enabled nmb)" = "enabled" ]]; then
-            systemctl disable nmb
-        fi
-
-        # enable avahi-daemon to another linux detect samba in network and some another network services
-        if [[ "$(systemctl is-enabled avahi-daemon.service)" = "disabled" ]]; then
-            systemctl enable avahi-daemon.service
-        fi        
-
+    # disable old nmb, only needed to found very old shares from windows 7 and more older
+    if [[ "$(systemctl is-enabled nmb)" = "enabled" ]] && [[ "$(systemctl is-enabled avahi-daemon.service)" = "disabled" ]]; then
+        systemctl disable nmb
+        systemctl enable avahi-daemon.service
     fi
 
 
